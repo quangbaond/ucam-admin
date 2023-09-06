@@ -47,6 +47,7 @@ type InnerProps = {
     'upload-image-crop': GetRCPropsType<typeof Upload>;
     'select-multiple': GetRCPropsType<typeof Select>;
     'select-debounce': GetRCPropsType<typeof Select>;
+    time: GetRCPropsType<typeof TimePicker>;
 };
 
 export interface SelectOptions {
