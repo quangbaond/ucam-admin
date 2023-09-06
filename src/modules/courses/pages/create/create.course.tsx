@@ -282,6 +282,7 @@ const CreateCourseForm = (props: CreateCourseProps) => {
                                     name="startDate"
                                     type="date"
                                     innerProps={{ placeholder: 'Nhập ngày khai giảng', allowClear: true }}
+                                    required
                                 />
                             </Col>
                             <Col span={18}>
@@ -291,6 +292,7 @@ const CreateCourseForm = (props: CreateCourseProps) => {
                                     type="checkbox"
                                     options={dateInWeek}
                                     innerProps={{ placeholder: 'Schedules' }}
+                                    required
                                 />
                             </Col>
                         </Row>
@@ -301,6 +303,7 @@ const CreateCourseForm = (props: CreateCourseProps) => {
                                     name="startAt"
                                     type="time"
                                     innerProps={{ placeholder: 'Thời gian bắt đầu', allowClear: true }}
+                                    required
                                 />
                             </Col>
                             <Col span={18}>
@@ -309,6 +312,7 @@ const CreateCourseForm = (props: CreateCourseProps) => {
                                     name="endAt"
                                     type="time"
                                     innerProps={{ placeholder: 'Thời gian kết thúc', allowClear: true }}
+                                    required
                                 />
                             </Col>
                         </Row>
