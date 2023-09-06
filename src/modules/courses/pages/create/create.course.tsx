@@ -294,6 +294,24 @@ const CreateCourseForm = (props: CreateCourseProps) => {
                                 />
                             </Col>
                         </Row>
+                        <Row gutter={30}>
+                            <Col span={6}>
+                                <MyFormItem
+                                    label={'Bắt đầu'}
+                                    name="startAt"
+                                    type="time"
+                                    innerProps={{ placeholder: 'Thời gian bắt đầu', allowClear: true }}
+                                />
+                            </Col>
+                            <Col span={18}>
+                                <MyFormItem
+                                    label={'Kết thúc'}
+                                    name="endAt"
+                                    type="time"
+                                    innerProps={{ placeholder: 'Thời gian kết thúc', allowClear: true }}
+                                />
+                            </Col>
+                        </Row>
                     </Col>
                     <Col span={4}>
                         <MyFormItem

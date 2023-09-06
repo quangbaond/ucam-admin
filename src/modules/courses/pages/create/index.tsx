@@ -53,6 +53,8 @@ const CourseForm = () => {
             cost: values.cost,
             startDate: values.startDate,
             schedules: values.schedules,
+            startAt: values.startAt,
+            endAt: values.endAt,
         };
 
         setSubjectId(values.subject.value ? values.subject.value : values.subject);
@@ -84,6 +86,8 @@ const CourseForm = () => {
                     createCourseForm.setFieldValue('cost', course?.cost);
                     createCourseForm.setFieldValue('startDate', course.startDate ? new Date(course.startDate) : null);
                     createCourseForm.setFieldValue('schedules', course.schedules.length > 0 ? course.schedules : null);
+                    createCourseForm.setFieldValue('startAt', course.startAt);
+                    createCourseForm.setFieldValue('endAt', course.endAt);
 
                     setImageUrl(course?.coverMedia);
                     setUpdate(true);

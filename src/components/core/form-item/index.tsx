@@ -4,7 +4,7 @@ import type { FC } from 'react';
 
 import { Editor } from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { Checkbox, DatePicker, Form, Input, InputNumber, Radio, Select, Switch, Upload } from 'antd';
+import { Checkbox, DatePicker, Form, Input, InputNumber, Radio, Select, Switch, TimePicker, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useMemo } from 'react';
 
@@ -26,7 +26,8 @@ export type ControlTypes =
     | 'upload-image-crop'
     | 'select-multiple'
     | 'select-debounce'
-    | 'text-area';
+    | 'text-area'
+    | 'time';
 
 type GetRCPropsType<T> = T extends (props: infer R) => any ? R : T extends React.ComponentClass<infer R> ? R : any;
 
@@ -124,6 +125,9 @@ export class ControlMap {
     date() {
         return <DatePicker {...this.innerProps} format="DD-MM-YYYY" />;
     }
+    time() {
+        return <TimePicker {...this.innerProps} format="HH:mm" />;
+    }
 
     checkbox() {
         // highlight-next-line
@@ -164,9 +168,9 @@ export class ControlMap {
         return (
             <CKEditor
                 {...this.innerProps}
-                // config={{
-                //     extraPlugins: [uploadPlugin],
-                // }}
+                config={{
+                    extraPlugins: [uploadPlugin],
+                }}
                 editor={Editor}
                 row="5"
                 onChange={(e: Event, editor: any) => {
