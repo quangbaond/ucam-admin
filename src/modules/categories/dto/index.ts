@@ -5,6 +5,7 @@ export interface Category {
     name: string;
     slug: string;
     parentId: string;
+    child: any;
 }
 export interface Detail {
     categoryId: string;

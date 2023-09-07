@@ -38,24 +38,10 @@ const CategoryList = (props: IListCategoryProps) => {
         },
         {
             title: 'Danh mục lớn',
-            dataIndex: 'parentId',
+            dataIndex: 'child',
             key: '_id',
+            render: (_: string, record: Category) => <p>{record?.child?.name}</p>,
         },
-        // {
-        //     title: 'Trạng thái',
-        //     dataIndex: 'status',
-        //     key: '_id',
-        //     width: '10%',
-        //     align: 'center' as const,
-        //     render: (status: string, record: Category) => (
-        //         <Switch
-        //             defaultChecked={status === StatusEnum.ACTIVE}
-        //             onClick={(checked: boolean, _) => {
-        //                 updateStatus(checked, record._id as string);
-        //             }}
-        //         />
-        //     ),
-        // },
         {
             title: 'Hành động',
             dataIndex: 'action',
