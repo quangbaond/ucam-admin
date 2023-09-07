@@ -1,18 +1,23 @@
-import type { ICategoryParams, IFormCategoryProps } from '../dto';
+import type { Category, ICategoryParams, IFormCategoryProps } from '../dto';
 
 import { Button, Col, Drawer, Row } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { callbackApi } from '@/common';
 import MyForm from '@/components/core/form';
 import MyFormItem from '@/components/core/form-item';
-import { SchoolOptions } from '@/interface';
 
-import { createCategoryApi, getCategoryDetailApi, updateCategoryApi } from '../api';
+import { createCategoryApi, findAllCategoryApi, getCategoryDetailApi, updateCategoryApi } from '../api';
 
 const FormCategory = (props: IFormCategoryProps) => {
     const { open, onClose, type, id } = props;
     const [form] = MyForm.useForm();
+    const [categoryList, setCategoryList] = useState<any>([
+        {
+            key: 1,
+            label: 'Danh muc',
+        },
+    ]);
 
     const onFinish = async (values: ICategoryParams) => {
         const response: any = type === 'create' ? await createCategoryApi(values) : await updateCategoryApi(id, values);
@@ -39,16 +44,30 @@ const FormCategory = (props: IFormCategoryProps) => {
                 const { status, result } = response;
 
                 if (status) {
-                    form.setFieldsValue({
-                        name: result.name,
-                        educationType: result.educationType,
-                        position: result.position,
-                    });
+                    form.setFieldsValue({ name: result.name });
                 }
             };
 
             getDetailCategory();
         }
+
+        const getCategories = async () => {
+            const res = await findAllCategoryApi({
+                filterQuery: { parentId: null },
+                options: { pagination: false },
+            });
+
+            if (res.status) {
+                setCategoryList(
+                    res.result?.docs.map((category: Category) => ({
+                        label: category.name,
+                        value: category._id,
+                    })),
+                );
+            }
+        };
+
+        getCategories();
     }, [type, id]);
 
     return (
@@ -71,21 +90,10 @@ const FormCategory = (props: IFormCategoryProps) => {
                     </Col>
                     <Col span={12}>
                         <MyFormItem
-                            name="educationType"
-                            label="Khối trường"
-                            required
+                            name="parentId"
+                            label="Danh mục lớn"
                             type="select"
-                            options={SchoolOptions}
-                            initialValue={SchoolOptions[0].value}
-                        ></MyFormItem>
-                    </Col>
-                    <Col span={12}>
-                        <MyFormItem
-                            name="position"
-                            label="Thứ tự hiển thị"
-                            required
-                            type="input-number"
-                            innerProps={{ min: 0 }}
+                            options={categoryList}
                         ></MyFormItem>
                     </Col>
                 </Row>

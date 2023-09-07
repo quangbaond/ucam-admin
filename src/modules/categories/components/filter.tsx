@@ -26,20 +26,6 @@ const Filter = (props: FilterProp) => {
         });
     };
 
-    const handleChangeSchool = (value: string) => {
-        setParamSearch({
-            ...paramSearch,
-            educationType: value,
-        });
-    };
-
-    const handleChangeStatus = (value: string) => {
-        setParamSearch({
-            ...paramSearch,
-            status: value,
-        });
-    };
-
     const debouncedChangeHandler = useCallback(debounce(onSearch, 300), []);
 
     useEffect(() => {
@@ -62,17 +48,7 @@ const Filter = (props: FilterProp) => {
                             <Input placeholder="Tìm kiếm" allowClear onChange={onChange} />
                         </Form.Item>
                     </Col>
-                    <Col span={8}>
-                        <Form.Item name="school" label="Khối trường">
-                            <Select
-                                placeholder="Chọn khối trường"
-                                onChange={handleChangeSchool}
-                                options={SchoolOptions}
-                                allowClear
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
+                    {/* <Col span={8}>
                         <Form.Item name="status" label="Trạng thái">
                             <Select
                                 placeholder="Chọn trạng thái"
@@ -81,7 +57,7 @@ const Filter = (props: FilterProp) => {
                                 allowClear
                             />
                         </Form.Item>
-                    </Col>
+                    </Col> */}
                 </Row>
             </Form>
         </>

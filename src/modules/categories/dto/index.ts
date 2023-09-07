@@ -2,11 +2,9 @@ import type { EducationTypeEnum, StatusEnum } from '../../../interface';
 
 export interface Category {
     _id: string;
-    status: StatusEnum;
-    position: number;
     name: string;
-    educationType: string;
-    details: Detail[];
+    slug: string;
+    parentId: string;
 }
 export interface Detail {
     categoryId: string;
@@ -15,8 +13,7 @@ export interface Detail {
 }
 
 export interface FindCategoriesParams {
-    educationType?: Array<EducationTypeEnum | string>;
-    educationId?: string;
+    parentId?: string | null;
     search?: string;
 }
 

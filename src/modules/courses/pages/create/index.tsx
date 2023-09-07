@@ -8,6 +8,8 @@ import type { Lesson } from '@/modules/lessons/dto';
 import './index.less';
 
 import { Button, Card, Col, Divider, message, Row, Steps } from 'antd';
+import dayjs from 'dayjs';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -81,13 +83,20 @@ const CourseForm = () => {
                     });
                     createCourseForm.setFieldValue('plan', course?.plan);
                     createCourseForm.setFieldValue('name', course?.name);
-                    createCourseForm.setFieldValue('educations', course?.educations);
                     createCourseForm.setFieldValue('descriptions', course?.descriptions);
                     createCourseForm.setFieldValue('cost', course?.cost);
-                    createCourseForm.setFieldValue('startDate', course.startDate ? new Date(course.startDate) : null);
+                    const starDate = course.startDate ? moment(course.startDate).format('DD-MM-Y') : '';
+
+                    createCourseForm.setFieldValue('startDate', starDate ? dayjs(starDate, 'DD-MM-YYYY') : '');
+
                     createCourseForm.setFieldValue('schedules', course.schedules.length > 0 ? course.schedules : null);
-                    createCourseForm.setFieldValue('startAt', course.startAt);
-                    createCourseForm.setFieldValue('endAt', course.endAt);
+                    const startAt = course.startAt ? moment(course.startAt).format('HH:mm') : '';
+
+                    createCourseForm.setFieldValue('startAt', startAt ? dayjs(startAt, 'HH:mm') : '');
+
+                    const endAt = course.endAt ? moment(course.endAt).format('HH:mm') : '';
+
+                    createCourseForm.setFieldValue('endAt', endAt ? dayjs(endAt, 'HH:mm') : '');
 
                     setImageUrl(course?.coverMedia);
                     setUpdate(true);

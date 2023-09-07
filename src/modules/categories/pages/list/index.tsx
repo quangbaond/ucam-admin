@@ -37,48 +37,25 @@ const CategoryList = (props: IListCategoryProps) => {
             key: '_id',
         },
         {
-            title: 'Khối trường',
-            dataIndex: 'educationType',
+            title: 'Danh mục lớn',
+            dataIndex: 'parentId',
             key: '_id',
-            render: (educationType: EducationTypeEnum) => {
-                let color = 'green';
-                let text = EducationTypeTextEnum.UNIVERSITY;
-
-                if (educationType === EducationTypeEnum.UNIVERSITY) {
-                    color = 'blue';
-                    text = EducationTypeTextEnum.UNIVERSITY;
-                } else if (educationType === EducationTypeEnum.HIGH_SCHOOL) {
-                    color = 'green';
-                    text = EducationTypeTextEnum.HIGH_SCHOOL;
-                } else {
-                    color = 'green';
-                    text = EducationTypeTextEnum.HIGH_SCHOOL;
-                }
-
-                return (
-                    <>
-                        <Tag color={color} key={educationType}>
-                            {text}
-                        </Tag>
-                    </>
-                );
-            },
         },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'status',
-            key: '_id',
-            width: '10%',
-            align: 'center' as const,
-            render: (status: string, record: Category) => (
-                <Switch
-                    defaultChecked={status === StatusEnum.ACTIVE}
-                    onClick={(checked: boolean, _) => {
-                        updateStatus(checked, record._id as string);
-                    }}
-                />
-            ),
-        },
+        // {
+        //     title: 'Trạng thái',
+        //     dataIndex: 'status',
+        //     key: '_id',
+        //     width: '10%',
+        //     align: 'center' as const,
+        //     render: (status: string, record: Category) => (
+        //         <Switch
+        //             defaultChecked={status === StatusEnum.ACTIVE}
+        //             onClick={(checked: boolean, _) => {
+        //                 updateStatus(checked, record._id as string);
+        //             }}
+        //         />
+        //     ),
+        // },
         {
             title: 'Hành động',
             dataIndex: 'action',
