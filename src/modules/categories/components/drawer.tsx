@@ -44,7 +44,7 @@ const CategoryDrawer = (props: DrawerProps) => {
 
     const getCategories = async () => {
         const res = await findAllCategoryApi({
-            filterQuery: { educationId: educationId, educationType: [educationType, ''] },
+            filterQuery: {},
             options: { pagination: false },
         });
 
@@ -83,19 +83,19 @@ const CategoryDrawer = (props: DrawerProps) => {
     useEffect(() => {
         if (data && activeKey) {
             console.log('test', activeKey);
-            let selectedKeys: string[] = [];
+            // let selectedKeys: string[] = [];
 
-            data.forEach((category: Category) => {
-                const keys = category.details?.map((e: Detail) => e.subjectId);
+            // data.forEach((category: Category) => {
+            //     const keys = category.details?.map((e: Detail) => e.subjectId);
 
-                if (category._id === activeKey) {
-                    setTargetKeys(keys);
-                } else {
-                    selectedKeys = selectedKeys.concat(keys);
-                }
-            });
+            //     if (category._id === activeKey) {
+            //         setTargetKeys(keys);
+            //     } else {
+            //         selectedKeys = selectedKeys.concat(keys);
+            //     }
+            // });
 
-            setDisplayList(subjectList.filter((e: TransferItem) => !selectedKeys.includes(e.key as string, 0)));
+            // setDisplayList(subjectList.filter((e: TransferItem) => !selectedKeys.includes(e.key as string, 0)));
         }
     }, [activeKey, data]);
 
