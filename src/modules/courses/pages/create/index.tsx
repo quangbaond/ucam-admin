@@ -44,12 +44,7 @@ const CourseForm = () => {
             plan: values.plan,
             name: values.name,
             mentorId: values.mentor.value,
-            subjectId: values.subject.value ? values.subject.value : values.subject,
-            educations: values.educations
-                ? values.educations.some((e: SelectOptions) => e.value === 'ALL')
-                    ? educations.map((e: SelectOptions) => e.value)
-                    : values.educations.map((e: SelectOptions) => (e.value ? e.value : e))
-                : [],
+            categoryId: values.categoryId.value ? values.categoryId.value : values.categoryId,
             descriptions: descriptions,
             coverMedia: values.coverMedia ? values.coverMedia?.file?.response?.url : imageUrl,
             cost: values.cost,
@@ -59,7 +54,7 @@ const CourseForm = () => {
             endAt: values.endAt,
         };
 
-        setSubjectId(values.subject.value ? values.subject.value : values.subject);
+        // setSubjectId(values.subject.value ? values.subject.value : values.subject);
 
         if (!courseId) {
             return createCourseApi(payload);
@@ -76,7 +71,7 @@ const CourseForm = () => {
                 if (res.status) {
                     const course = res.result;
 
-                    createCourseForm.setFieldValue('subject', course.subject?._id);
+                    createCourseForm.setFieldValue('categoryId', course.categoryId?._id);
                     createCourseForm.setFieldValue('mentor', {
                         label: course.mentor?.fullName,
                         value: course.mentor?._id,

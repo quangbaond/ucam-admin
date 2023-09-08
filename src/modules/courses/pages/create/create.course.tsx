@@ -1,5 +1,6 @@
 import type { PageData } from '@/interface';
 import type { Education } from '@/interface/educations';
+import type { Category } from '@/modules/categories/dto';
 import type { Subject } from '@/modules/subjects/dto';
 import type { User } from '@/modules/users/dto/login';
 import type { RcFile } from 'antd/es/upload';
@@ -17,6 +18,7 @@ import MyForm from '@/components/core/form';
 import MyFormItem from '@/components/core/form-item';
 import { EducationTypeEnum, PlanEnum, planOptions, SchoolOptions } from '@/interface';
 import { useLocale } from '@/locales';
+import { findAllCategoryApi } from '@/modules/categories/api';
 import { findSubjectsApi } from '@/modules/subjects/api';
 import { findUsersApi } from '@/modules/users/api';
 
@@ -128,31 +130,17 @@ const CreateCourseForm = (props: CreateCourseProps) => {
         </div>
     );
 
-    async function fetchSubjects(search: string, others: any): Promise<any> {
+    async function fetchCategory(search: string, others: any): Promise<any> {
         const filterQuery = search ? { search: search, ...others } : others;
 
-        return findSubjectsApi({ filterQuery: filterQuery, options: { pagination: false } })
+        return findAllCategoryApi({ filterQuery: filterQuery, options: { pagination: false } })
             .then((response: any) => response.result)
-            .then((body: PageData<Subject>) =>
-                body.docs.map((subject: Subject) => ({
-                    label: subject.name,
-                    value: subject._id,
+            .then((body: PageData<Category>) =>
+                body.docs.map((category: Category) => ({
+                    label: category.name,
+                    value: category._id,
                 })),
             );
-    }
-
-    async function fetchEducations(search: string, others: any): Promise<any> {
-        const filterQuery = search ? { search: search, ...others } : others;
-        const res = await findEducationsApi({ filterQuery: filterQuery, options: { pagination: false } });
-
-        const resMap = res.result.docs.map((education: Education) => ({
-            label: education.name,
-            value: education._id,
-        }));
-
-        setEducations(resMap);
-
-        return search ? resMap : selectAll.concat(resMap);
     }
 
     async function fetchMentorList(search: string): Promise<any> {
@@ -169,16 +157,10 @@ const CreateCourseForm = (props: CreateCourseProps) => {
     }
 
     useEffect(() => {
-        const fetchSubjectOption = async () => {
-            const res = await fetchSubjects('', { educationType: educationType });
+        const fetchCategoryOption = async () => {
+            const res = await fetchCategory('', {});
 
             setSubjectOptions(res);
-        };
-
-        const fetchEducationOptions = async () => {
-            const res = await fetchEducations('', { educationType: educationType });
-
-            setEducationOptions(res);
         };
 
         const fetchMentorOption = async () => {
@@ -187,8 +169,7 @@ const CreateCourseForm = (props: CreateCourseProps) => {
             setMentorOptions(res);
         };
 
-        fetchEducationOptions();
-        fetchSubjectOption();
+        fetchCategoryOption();
         fetchMentorOption();
     }, [educationType]);
 
@@ -254,12 +235,11 @@ const CreateCourseForm = (props: CreateCourseProps) => {
                             <Col span={9}>
                                 <MyFormItem
                                     label={formatMessage({ id: 'component.search.subject' })}
-                                    name="subject"
+                                    name="categoryId"
                                     options={subjectOptions}
                                     type="select-debounce"
-                                    fetchOptions={fetchSubjects}
-                                    otherFilter={{ educationType: educationType }}
-                                    innerProps={{ placeholder: 'Chọn môn học', allowClear: true }}
+                                    fetchOptions={fetchCategory}
+                                    innerProps={{ placeholder: 'Chọn danh mục', allowClear: true }}
                                     required
                                 />
                             </Col>
