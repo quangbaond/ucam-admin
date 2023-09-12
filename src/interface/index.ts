@@ -55,8 +55,7 @@ export enum EducationTypeTextEnum {
 }
 
 export enum RoleEnum {
-    FREE_USER = 'FREE_USER',
-    PREMIUM_USER = 'PREMIUM_USER',
+    USER = 'USER',
     ADMIN = 'ADMIN',
 }
 
@@ -152,11 +151,7 @@ export const RoleOptions = [
     },
     {
         label: 'Người dùng',
-        value: RoleEnum.FREE_USER,
-    },
-    {
-        label: 'Người dùng cao cấp',
-        value: RoleEnum.PREMIUM_USER,
+        value: RoleEnum.USER,
     },
 ];
 
@@ -208,3 +203,96 @@ export interface steps {
     description?: string;
     icon?: React.ReactNode;
 }
+
+export enum TYPE_FORM_ENUM {
+    CREATE = 'CREATE',
+    EDIT = 'EDIT',
+}
+
+export enum PERMISSION_ENUM {
+    CREATE = 'CREATE',
+    EDIT = 'EDIT',
+    DELETE = 'DELETE',
+    VIEW = 'VIEW',
+    GRANT = 'GRANT',
+}
+
+export interface USER_MODULE {
+    name: MenuEnum;
+    permissions: Array<PermissionEnum>;
+}
+export enum MenuEnum {
+    HOME = 'HOME',
+    COURSE = 'COURSE',
+    TEST = 'TEST',
+    USER = 'USER',
+    CATEGORY = 'CATEGORY',
+    GROUP = 'GROUP',
+}
+export const MenuOptions = [
+    {
+        label: 'Trang chủ',
+        value: MenuEnum.HOME,
+    },
+    {
+        label: 'Khóa học',
+        value: MenuEnum.COURSE,
+    },
+    {
+        label: 'Bài kiểm tra',
+        value: MenuEnum.TEST,
+    },
+    {
+        label: 'Người dùng',
+        value: MenuEnum.USER,
+    },
+    {
+        label: 'Danh mục',
+        value: MenuEnum.CATEGORY,
+    },
+    {
+        label: 'Nhóm',
+        value: MenuEnum.GROUP,
+    },
+];
+export const PermissionOptions = [
+    {
+        value: PERMISSION_ENUM.CREATE,
+        label: 'Tạo mới',
+    },
+    {
+        value: PERMISSION_ENUM.VIEW,
+        label: 'Xem',
+    },
+    {
+        value: PERMISSION_ENUM.EDIT,
+        label: 'Chỉnh sửa',
+    },
+    {
+        value: PERMISSION_ENUM.DELETE,
+        label: 'Xóa',
+    },
+];
+
+export const MODULE_GROUP = [
+    {
+        key: MenuEnum.USER,
+        label: 'Người dùng',
+        permissions: PermissionOptions,
+    },
+    {
+        key: MenuEnum.COURSE,
+        label: 'Khóa học',
+        permissions: PermissionOptions,
+    },
+    {
+        key: MenuEnum.CATEGORY,
+        label: 'Danh mục',
+        permissions: PermissionOptions,
+    },
+    {
+        key: MenuEnum.GROUP,
+        label: 'Nhóm',
+        permissions: PermissionOptions,
+    },
+];

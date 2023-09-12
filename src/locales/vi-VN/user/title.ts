@@ -19,4 +19,5 @@ export const viVN_title = {
     'title.announcement': 'Quản lý thông báo',
     'title.category': 'Quản lý danh mục',
     'title.banner': 'Quản lý banner',
+    'title.groups': 'Nhóm & Quyền',
 };

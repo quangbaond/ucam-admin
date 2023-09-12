@@ -1,3 +1,5 @@
+import type { USER_MODULE } from '..';
+
 interface MenuItem {
     /** menu item code */
     code: string;
@@ -19,3 +21,8 @@ interface MenuItem {
 export type MenuChild = Omit<MenuItem, 'children'>;
 
 export type MenuList = MenuItem[];
+
+export interface MenuModules {
+    menuList: MenuList;
+    modules: USER_MODULE[];
+}

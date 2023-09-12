@@ -2,12 +2,17 @@ import type { FindCategoriesParams } from '../dto';
 
 import { Button, Card } from 'antd';
 import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { MenuEnum, PERMISSION_ENUM } from '@/interface';
 
 import Filter from '../components/filter';
 import FormCategory from '../components/form';
 import CategoryList from './list';
 
 const Categories = () => {
+    const userModule = useSelector(state => state.user.modules);
+    const userModuleItem = userModule.find(item => item.name === MenuEnum.CATEGORY);
     const [paramSearch, setParamSearch] = useState<FindCategoriesParams | null>(null);
     const [isRefresh, setIsRefresh] = useState<boolean>(false);
     const [idActive, setIdActive] = useState<string>('');
@@ -19,16 +24,22 @@ const Categories = () => {
         if (!paramSearch) return null;
 
         return (
-            <CategoryList
-                paramSearch={paramSearch}
-                reload={() => {
-                    setIsRefresh(isRefresh => !isRefresh);
-                }}
-                handleSetCategory={(id: string) => {
-                    setIsOpenFormUpdate(true);
-                    setIdActive(id);
-                }}
-            />
+            <>
+                {userModuleItem?.permissions.includes(PERMISSION_ENUM.VIEW) ? (
+                    <CategoryList
+                        paramSearch={paramSearch}
+                        reload={() => {
+                            setIsRefresh(isRefresh => !isRefresh);
+                        }}
+                        handleSetCategory={(id: string) => {
+                            setIsOpenFormUpdate(true);
+                            setIdActive(id);
+                        }}
+                    />
+                ) : (
+                    'Bạn không có quyền xem thông tin này'
+                )}
+            </>
         );
     }, [paramSearch]);
 
@@ -46,6 +57,7 @@ const Categories = () => {
     return (
         <>
             <Card
+                style={{ margin: '5px' }}
                 title="Danh sách danh mục"
                 extra={
                     <>

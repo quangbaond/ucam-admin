@@ -8,8 +8,8 @@ import { useDispatch } from 'react-redux';
 
 import MyPage from '@/components/business/page';
 import { StatusEnum } from '@/interface';
-import FilterUser from '@/modules/users/pages/list/filterUser';
 
+// import FilterUser from '@/modules/users/pages/list/filterUser';
 import { deleteSubjectApi, findSubjectsApi, getDetailSubjectApi, updateSubjectApi } from '../../api';
 import SubjectForm from '../drawer';
 
@@ -114,9 +114,9 @@ const SubjectList: React.FC = () => {
 
         return <MyPage pageApi={findSubjectsApi} tableOptions={tableColumns} paramSearch={paramSearch} />;
     }, [paramSearch]);
-    const filterUser = useMemo(() => {
-        return <FilterUser onSearch={handelSearchSubject} resetForm={resetForm} />;
-    }, [resetForm]);
+    // const filterUser = useMemo(() => {
+    //     return <FilterUser onSearch={handelSearchSubject} resetForm={resetForm} />;
+    // }, [resetForm]);
 
     const onPressCreate = () => {
         setOpenCreate(true);
@@ -166,7 +166,7 @@ const SubjectList: React.FC = () => {
                     </>
                 }
             >
-                {filterUser}
+                {/* {filterUser} */}
                 {tableData}
             </Card>
             {typeBtn === 'create' ? (

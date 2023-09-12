@@ -53,7 +53,7 @@ const FormCategory = (props: IFormCategoryProps) => {
 
         const getCategories = async () => {
             const res = await findAllCategoryApi({
-                filterQuery: { parentId: null },
+                filterQuery: {},
                 options: { pagination: false },
             });
 

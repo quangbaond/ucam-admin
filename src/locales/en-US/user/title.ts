@@ -26,4 +26,5 @@ export const enUS_title = {
     'title.config_partner': 'Quản lý đối tác',
     'title.config_system': 'Quản lý cấu hình hệ thống',
     'title.withdraw': 'Yêu cầu rút điểm',
+    'title.groups': 'Nhóm & Quyền',
 };

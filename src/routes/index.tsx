@@ -14,13 +14,12 @@ import CourseCreateForm from '@/modules/courses/pages/create';
 import CourseListForm from '@/modules/courses/pages/list';
 import Education from '@/modules/educations/pages/';
 import Exam from '@/modules/exams/pages';
+import Groups from '@/modules/groups/pages/Groups';
 import MajorList from '@/modules/majors/pages/list';
 import MentorForm from '@/modules/mentor/page';
-import Pedagogy from '@/modules/pedagogy/pages';
 import Question from '@/modules/questions/pages/';
 import SubjectList from '@/modules/subjects/pages/list';
-import UserList from '@/modules/users/pages';
-import UserFormUpdate from '@/modules/users/pages/edit';
+import Users from '@/modules/users/pages/users';
 import WithDraw from '@/modules/withdraw/pages';
 import LayoutPage from '@/pages/layout';
 import LoginPage from '@/pages/login';
@@ -51,15 +50,11 @@ const routeList: RouteObject[] = [
             },
             {
                 path: 'users',
-                element: <WrapperRouteComponent element={<UserList />} titleId="title.users" />,
+                element: <WrapperRouteComponent element={<Users />} titleId="title.users" />,
             },
             {
                 path: 'withdraws',
                 element: <WrapperRouteComponent element={<WithDraw />} titleId="title.withdraw" />,
-            },
-            {
-                path: 'users/:id',
-                element: <WrapperRouteComponent element={<UserFormUpdate />} titleId="title.users" />,
             },
             {
                 path: 'edu/educations',
@@ -88,6 +83,10 @@ const routeList: RouteObject[] = [
                 element: <WrapperRouteComponent element={<Question />} titleId="title.question" />,
             },
             {
+                path: 'groups',
+                element: <WrapperRouteComponent element={<Groups />} titleId="title.groups" />,
+            },
+            {
                 path: 'edu/subjects',
                 element: <WrapperRouteComponent element={<SubjectList />} titleId="title.subject" />,
             },
@@ -96,7 +95,7 @@ const routeList: RouteObject[] = [
                 element: <WrapperRouteComponent element={<MajorList />} titleId="title.major" />,
             },
             {
-                path: 'edu/categories',
+                path: 'categories',
                 element: <WrapperRouteComponent element={<Categories />} titleId="title.category" />,
             },
             {

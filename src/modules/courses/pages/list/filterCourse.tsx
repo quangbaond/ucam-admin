@@ -115,7 +115,7 @@ const FilterCourse = (props: FilterUserProp) => {
                             innerProps={{ placeholder: 'Chọn mentor', allowClear: true, showSearch: true }}
                         />
                     </Col>
-                    <Col span={6}>
+                    {/* <Col span={6}>
                         <MyFormItem
                             label={formatMessage({ id: 'component.search.subject' })}
                             name="subjectId"
@@ -125,7 +125,7 @@ const FilterCourse = (props: FilterUserProp) => {
                             fetchOptions={fetchSubjects}
                             innerProps={{ placeholder: 'Chọn môn học', allowClear: true }}
                         />
-                    </Col>
+                    </Col> */}
                     <Col span={3}>
                         <MyFormItem
                             label={formatMessage({ id: 'component.search.plan' })}

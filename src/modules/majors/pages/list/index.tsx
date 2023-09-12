@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 
 import MyPage from '@/components/business/page';
 import { EducationTypeEnum, EducationTypeTextEnum, StatusEnum } from '@/interface';
-import FilterUser from '@/modules/users/pages/list/filterUser';
 
 import { deleteMajorApi, findMajorApi, getDetailMajorApi, updateMajorApi } from '../../api';
 import MajorForm from '../drawer';
@@ -143,9 +142,9 @@ const MajorList: React.FC = () => {
 
         return <MyPage pageApi={findMajorApi} tableOptions={tableColumns} paramSearch={paramSearch} />;
     }, [paramSearch]);
-    const filterUser = useMemo(() => {
-        return <FilterUser onSearch={handelSearchMajor} resetForm={resetForm} />;
-    }, [resetForm]);
+    // const filterUser = useMemo(() => {
+    //     return <FilterUser onSearch={handelSearchMajor} resetForm={resetForm} />;
+    // }, [resetForm]);
 
     const onPressCreate = () => {
         setOpenCreate(true);
@@ -195,7 +194,6 @@ const MajorList: React.FC = () => {
                     </>
                 }
             >
-                {filterUser}
                 {tableData}
             </Card>
             {typeBtn === 'create' ? (

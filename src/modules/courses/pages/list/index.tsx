@@ -7,10 +7,11 @@ import { PlusCircleOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Button, Card, message, Popconfirm, Space, Switch, Tag, Tooltip } from 'antd';
 import React, { useMemo, useState } from 'react';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import MyPage from '@/components/business/page';
-import { ModelEnum, PlanEnum, StatusEnum } from '@/interface';
+import { MenuEnum, ModelEnum, PERMISSION_ENUM, PlanEnum, StatusEnum } from '@/interface';
 import ActivationDrawer from '@/modules/activations/pages/drawer';
 import { deleteCourseApi, findAllCoursesApi, updateCourseApi } from '@/modules/courses/api';
 import EnrollDrawer from '@/modules/enrolls/pages/drawer';
@@ -21,6 +22,8 @@ const CourseListForm: React.FC = () => {
     const [courseId, setCourseId] = useState<string>('');
     const [openActivationCodeDrawer, setOpenActivationCodeDrawer] = useState(false);
     const [openEnrollDrawer, setOpenEnrollDrawer] = useState(false);
+    const userModule = useSelector(state => state.user.modules);
+    const userModuleItem = userModule.find(item => item.name === MenuEnum.COURSE);
 
     const tableColumns: MyPageTableOptions<Course> = [
         {
@@ -30,7 +33,7 @@ const CourseListForm: React.FC = () => {
             dataIndex: 'name',
         },
 
-        { title: 'Môn học', width: '25%', dataIndex: ['subjectId', 'name'], key: '_id' },
+        { title: 'Danh mục', width: '25%', dataIndex: ['category', 'name'], key: '_id' },
         { title: 'Mentor', width: '20%', dataIndex: ['mentor', 'fullName'], key: '_id' },
         {
             title: 'Loại',
@@ -90,39 +93,38 @@ const CourseListForm: React.FC = () => {
             render: (_, record) => (
                 <div className="display-center">
                     <Space size="middle">
-                        <Tooltip title="Thêm mới mã code">
-                            <PlusCircleOutlined
-                                onClick={() => {
-                                    setOpenActivationCodeDrawer(true);
-                                    setCourseId(record._id as string);
-                                }}
-                                className="icon-button"
-                            />
-                        </Tooltip>
-                        <Tooltip title="Thêm mới học viên">
-                            <UserAddOutlined
-                                onClick={() => {
-                                    setOpenEnrollDrawer(true);
-                                    setCourseId(record._id as string);
-                                }}
-                                className="icon-button"
-                                style={{ color: '#000' }}
-                            />
-                        </Tooltip>
-                        <Tooltip title="Sửa khoá học">
-                            <AiOutlineEdit className="icon-button" onClick={() => editCourse(record)} />
-                        </Tooltip>
-                        <Popconfirm
-                            placement="right"
-                            title={'Bạn có muốn xoá khoá học?'}
-                            okText="Có"
-                            cancelText="Không"
-                            onConfirm={_ => deleteCourse(record)}
-                        >
-                            <Tooltip title="Xoá khoá học">
-                                <AiOutlineDelete className="icon-button-delete icon-button" />
+                        {userModuleItem?.permissions.includes(PERMISSION_ENUM.EDIT) && (
+                            <Tooltip title="Thêm mới học viên">
+                                <UserAddOutlined
+                                    onClick={() => {
+                                        setOpenEnrollDrawer(true);
+                                        setCourseId(record._id as string);
+                                    }}
+                                    className="icon-button"
+                                    style={{ color: '#000' }}
+                                />
                             </Tooltip>
-                        </Popconfirm>
+                        )}
+
+                        {userModuleItem?.permissions.includes(PERMISSION_ENUM.EDIT) && (
+                            <Tooltip title="Sửa khoá học">
+                                <AiOutlineEdit className="icon-button" onClick={() => editCourse(record)} />
+                            </Tooltip>
+                        )}
+
+                        {userModuleItem?.permissions.includes(PERMISSION_ENUM.DELETE) && (
+                            <Popconfirm
+                                placement="right"
+                                title={'Bạn có muốn xoá khoá học?'}
+                                okText="Có"
+                                cancelText="Không"
+                                onConfirm={_ => deleteCourse(record)}
+                            >
+                                <Tooltip title="Xoá khoá học">
+                                    <AiOutlineDelete className="icon-button-delete icon-button" />
+                                </Tooltip>
+                            </Popconfirm>
+                        )}
                     </Space>
                 </div>
             ),
@@ -172,34 +174,46 @@ const CourseListForm: React.FC = () => {
     }, [resetForm]);
 
     return (
-        <div className="course-list-page">
-            <Card
-                title="Danh sách khoá học"
-                bordered={true}
-                hoverable
-                extra={
-                    <>
-                        <Button onClick={() => setResetForm(!resetForm)} type="primary">
-                            Xoá bộ lọc
-                        </Button>
-                    </>
-                }
-            >
-                {filterUser} {tableData}
-            </Card>
-            <ActivationDrawer
-                targetId={courseId}
-                targetModel={ModelEnum.COURSE}
-                openActivationCodeDrawer={openActivationCodeDrawer}
-                setOpenActivationCodeDrawer={setOpenActivationCodeDrawer}
-            />
-            <EnrollDrawer
-                targetId={courseId}
-                targetModel={ModelEnum.COURSE}
-                openDrawer={openEnrollDrawer}
-                setOpenDrawer={setOpenEnrollDrawer}
-            />
-        </div>
+        <>
+            {userModuleItem?.permissions.includes(PERMISSION_ENUM.VIEW) ? (
+                <>
+                    <div className="course-list-page">
+                        <Card
+                            title="Danh sách khoá học"
+                            bordered={true}
+                            extra={
+                                <>
+                                    <Button onClick={() => setResetForm(!resetForm)} type="primary">
+                                        Xoá bộ lọc
+                                    </Button>
+                                    {userModuleItem?.permissions.includes(PERMISSION_ENUM.CREATE) && (
+                                        <Button onClick={() => navigate('/courses/create')} type="primary">
+                                            Thêm mới
+                                        </Button>
+                                    )}
+                                </>
+                            }
+                        >
+                            {filterUser} {tableData}
+                        </Card>
+                        <ActivationDrawer
+                            targetId={courseId}
+                            targetModel={ModelEnum.COURSE}
+                            openActivationCodeDrawer={openActivationCodeDrawer}
+                            setOpenActivationCodeDrawer={setOpenActivationCodeDrawer}
+                        />
+                        <EnrollDrawer
+                            targetId={courseId}
+                            targetModel={ModelEnum.COURSE}
+                            openDrawer={openEnrollDrawer}
+                            setOpenDrawer={setOpenEnrollDrawer}
+                        />
+                    </div>
+                </>
+            ) : (
+                'Bạn không có quyền xem thông tin này'
+            )}
+        </>
     );
 };
 

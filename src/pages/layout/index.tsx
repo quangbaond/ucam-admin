@@ -4,17 +4,19 @@ import type { FC } from 'react';
 import './index.less';
 
 import { Drawer, Layout, theme as antTheme } from 'antd';
+import MenuItem from 'antd/es/menu/MenuItem';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useLocation } from 'react-router';
 
+import { getMenuList } from '@/api/layout.api';
 import { setUserItem } from '@/stores/user.store';
 import { getFirstPathCode } from '@/utils/getFirstPathCode';
 import { getGlobalState } from '@/utils/getGloabal';
 
 import HeaderComponent from './header';
 import MenuComponent from './menu';
-import menuList from './menulist';
+// import menuList from './menulist';
 // import TagsView from './tagView';
 
 const { Sider, Content } = Layout;
@@ -24,9 +26,9 @@ const LayoutPage: FC = () => {
     const location = useLocation();
     const [openKey, setOpenkey] = useState<string>();
     const [selectedKey, setSelectedKey] = useState<string>(location.pathname);
-    const { device, collapsed } = useSelector((state) => state.user);
+    const { device, collapsed } = useSelector(state => state.user);
     const token = antTheme.useToken();
-
+    const [menuList, setMenuList] = useState<MenuList>([]);
     const isMobile = device === 'MOBILE';
     const dispatch = useDispatch();
 
@@ -48,11 +50,11 @@ const LayoutPage: FC = () => {
     const initMenuListAll = (menu: MenuList) => {
         const MenuListAll: MenuChild[] = [];
 
-        menu.forEach((m) => {
+        menu.forEach(m => {
             if (!m?.children?.length) {
                 MenuListAll.push(m);
             } else {
-                m?.children.forEach((mu) => {
+                m?.children.forEach(mu => {
                     MenuListAll.push(mu);
                 });
             }
@@ -62,11 +64,17 @@ const LayoutPage: FC = () => {
     };
 
     const fetchMenuList = useCallback(async () => {
-        dispatch(
-            setUserItem({
-                menuList: initMenuListAll(menuList),
-            }),
-        );
+        const { status, result } = await getMenuList();
+
+        if (status) {
+            setMenuList(result.menuList);
+            dispatch(
+                setUserItem({
+                    menuList: initMenuListAll(result.menuList),
+                    modules: result.modules,
+                }),
+            );
+        }
     }, [dispatch]);
 
     useEffect(() => {
@@ -105,9 +113,9 @@ const LayoutPage: FC = () => {
                         <MenuComponent
                             menuList={menuList}
                             openKey={openKey}
-                            onChangeOpenKey={(k) => setOpenkey(k)}
+                            onChangeOpenKey={k => setOpenkey(k)}
                             selectedKey={selectedKey}
-                            onChangeSelectedKey={(k) => setSelectedKey(k)}
+                            onChangeSelectedKey={k => setSelectedKey(k)}
                         />
                     </Sider>
                 ) : (
@@ -122,9 +130,9 @@ const LayoutPage: FC = () => {
                         <MenuComponent
                             menuList={menuList}
                             openKey={openKey}
-                            onChangeOpenKey={(k) => setOpenkey(k)}
+                            onChangeOpenKey={k => setOpenkey(k)}
                             selectedKey={selectedKey}
-                            onChangeSelectedKey={(k) => setSelectedKey(k)}
+                            onChangeSelectedKey={k => setSelectedKey(k)}
                         />
                     </Drawer>
                 )}

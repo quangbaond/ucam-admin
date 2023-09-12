@@ -1,5 +1,4 @@
 import type { Locale, UserState } from '@/interface/user/user';
-import type { Role } from '@/modules/users/dto/login';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { createSlice } from '@reduxjs/toolkit';
@@ -13,6 +12,7 @@ const initialState: UserState = {
     logged: localStorage.getItem('t') ? true : false,
     menuList: [],
     username: localStorage.getItem('username') || '',
+    modules: [],
 };
 
 const userSlice = createSlice({

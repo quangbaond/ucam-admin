@@ -1,6 +1,7 @@
 /** user's role */
 import type { MentorStatusEnum, RoleEnum, StatusEnum } from '@/interface';
 import type { Education } from '@/interface/educations';
+import type { Group } from '@/modules/groups/interface';
 import type { MentorSubject } from '@/modules/mentor/dto';
 
 export type Role = RoleEnum.ADMIN | RoleEnum.FREE_USER | RoleEnum.PREMIUM_USER;
@@ -36,15 +37,17 @@ export interface User {
     mentorStatus: MentorStatusEnum;
     subjects: MentorSubject[];
     devices: any;
+    group: Group;
+    groupId: string;
 }
 
 export interface LogoutParams {
     accessToken: string;
 }
 
-export interface LogoutResult {}
+export interface LogoutResult { }
 
-export interface UsersResult {}
+export interface UsersResult { }
 
 export interface IHistoryProps {
     onClose: () => void;

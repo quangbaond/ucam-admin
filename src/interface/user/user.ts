@@ -1,6 +1,6 @@
-import type { Role } from '../../modules/users/dto/login';
+import type { USER_MODULE } from '..';
+import type { MenuList } from '../layout/menu.interface';
 import type { Device } from '@/interface/layout/index.interface';
-import type { MenuChild } from '@/interface/layout/menu.interface';
 
 export type Locale = 'en_US';
 
@@ -8,7 +8,7 @@ export interface UserState {
     username: string;
 
     /** menu list for init tagsView */
-    menuList: MenuChild[];
+    menuList: MenuList;
 
     /** login status */
     logged: boolean;
@@ -26,4 +26,6 @@ export interface UserState {
 
     /** Is first time to view the site ? */
     newUser: boolean;
+
+    modules: USER_MODULE[];
 }
