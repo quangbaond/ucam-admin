@@ -96,6 +96,9 @@ const FormCategory = (props: IFormCategoryProps) => {
                             options={categoryList}
                         ></MyFormItem>
                     </Col>
+                    <Col span={12}>
+                        <MyFormItem name="description" label="Miêu tả" type="text-area"></MyFormItem>
+                    </Col>
                 </Row>
             </MyForm>
         </Drawer>

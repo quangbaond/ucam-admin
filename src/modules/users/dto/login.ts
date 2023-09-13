@@ -4,7 +4,7 @@ import type { Education } from '@/interface/educations';
 import type { Group } from '@/modules/groups/interface';
 import type { MentorSubject } from '@/modules/mentor/dto';
 
-export type Role = RoleEnum.ADMIN | RoleEnum.FREE_USER | RoleEnum.PREMIUM_USER;
+export type Role = RoleEnum.ADMIN | RoleEnum.USER;
 
 export interface LoginParams {
     account: string;

@@ -21,7 +21,7 @@ export const detailUserApi = (id: string) => request<User>('get', `${settings.AP
 export const createUserApi = (data: Partial<User>) => request<User>('post', `${settings.API_URL}/auth/signup`, data);
 
 export const updateUserApi = (id: string, data: Partial<User>) =>
-    request<User>('put', `${settings.API_URL}/edu/users/${id}`, data);
+    request<User>('put', `${settings.API_URL}/users/${id}`, data);
 
 export const changePasswordApi = (data: { password: string; confirmPassword: string }, email: string) =>
     request('put', `${settings.API_URL}/edu/users/change-password/${email}`, data);

@@ -6,6 +6,7 @@ export interface Category {
     slug: string;
     parentId: string;
     child: any;
+    children: Category;
 }
 export interface Detail {
     categoryId: string;

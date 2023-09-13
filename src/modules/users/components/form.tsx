@@ -22,7 +22,7 @@ const FormComponent = (props: IFormProps) => {
     const { isShowForm, id, closeForm, type } = props;
     const [defaultValues, setDefaultValues] = useState<any>([]);
     const [form] = Form.useForm();
-    const [title, setTitle] = useState<string>('Thêm mới nhóm');
+    const [title, setTitle] = useState<string>('Thêm mới người dùng');
     const [groupOptions, setGroupOptions] = useState([]);
     const [isMentor, setIsMentor] = useState<boolean>(false);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const FormComponent = (props: IFormProps) => {
 
     useEffect(() => {
         if (id && type == TYPE_FORM_ENUM.EDIT) {
-            setTitle('Chỉnh sửa nhóm');
+            setTitle('Chỉnh sửa Người dùng');
 
             const getUserDetail = async () => {
                 const res = await detailUserApi(id);

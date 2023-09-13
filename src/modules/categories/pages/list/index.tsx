@@ -16,14 +16,6 @@ const CategoryList = (props: IListCategoryProps) => {
     const userModule = useSelector(state => state.user.modules);
     const userModuleItem = userModule.find(item => item.name === MenuEnum.CATEGORY);
 
-    const updateStatus = async (checked: boolean, id: string) => {
-        const response: any = await updateCategoryApi(id, {
-            status: checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
-        });
-
-        callbackApi(response, 'Cập nhật trạng thái thành công!', () => {});
-    };
-
     const deleteCategory = async (id: string) => {
         const response: any = await deleteCategoryApi(id);
 
@@ -39,15 +31,9 @@ const CategoryList = (props: IListCategoryProps) => {
             key: '_id',
         },
         {
-            title: 'Danh mục lớn',
-            dataIndex: 'child',
-            key: '_id',
-            render: (_: string, record: Category) => <p>{record?.child?.name}</p>,
-        },
-        {
             title: 'Hành động',
             dataIndex: 'action',
-            key: '_id',
+            key: 'x',
             width: '10%',
             align: 'center' as const,
             render: (_: string, record: Category) => (

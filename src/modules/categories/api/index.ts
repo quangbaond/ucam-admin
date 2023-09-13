@@ -11,7 +11,9 @@ import { settings } from '@/api/const';
 import { request } from '@/api/request';
 
 export const findAllCategoryApi = (data: FindAllParam<FindCategoriesParams>) =>
-    request<PageData<Category>>('post', `${settings.API_URL}/category/find`, data);
+    request<PageData<Category>>('post', `${settings.API_URL}/category/find`, {
+        filterQuery: { parentId: null },
+    });
 
 export const findCategoryDetailApi = (data: FindAllParam<FindCategoriesDetailParams>) =>
     request<PageData<Detail>>('post', `${settings.API_URL}/category-details/find`, data);
